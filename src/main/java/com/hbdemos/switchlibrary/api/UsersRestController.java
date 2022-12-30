@@ -33,7 +33,7 @@ public class UsersRestController {
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserDTO item) {
-        var result = this.service.createGame(item);
+        var result = this.service.createUser(item);
         return ResponseEntity.ok(result);
     }
 

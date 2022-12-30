@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class GamesService {
@@ -20,7 +19,12 @@ public class GamesService {
     }
 
     public SwitchGameDTO createGame(CreateSwitchGameDTO spec) {
-        var entity = new SwitchGameEntity(null, spec.getTitle(), spec.getRating(), spec.getPublisher());
+        var entity = new SwitchGameEntity(
+                null,
+                spec.getTitle(),
+                spec.getRating(),
+                spec.getPublisher(),
+                List.of());
         var result = this.repository.saveAndFlush(entity);
         return result.asDto();
     }

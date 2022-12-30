@@ -2,15 +2,16 @@ package com.hbdemos.switchlibrary.entity;
 
 import com.hbdemos.switchlibrary.dto.SwitchGameDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="Games")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class SwitchGameEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,9 @@ public class SwitchGameEntity {
 
     @Column(name="publisher")
     private String publisher;
+
+    @OneToMany(mappedBy="game")
+    private List<CheckoutEntity> checkouts;
 
     public SwitchGameEntity(SwitchGameDTO dto) {
         this.id = dto.getId();

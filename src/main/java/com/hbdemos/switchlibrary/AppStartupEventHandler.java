@@ -1,7 +1,9 @@
 package com.hbdemos.switchlibrary;
 
 import com.hbdemos.switchlibrary.dto.CreateSwitchGameDTO;
+import com.hbdemos.switchlibrary.dto.CreateUserDTO;
 import com.hbdemos.switchlibrary.service.GamesService;
+import com.hbdemos.switchlibrary.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -12,10 +14,12 @@ import java.util.ArrayList;
 @Component
 public class AppStartupEventHandler {
     private GamesService gamesService;
+    private UsersService userService;
 
     @Autowired
-    public AppStartupEventHandler(GamesService gamesService) {
+    public AppStartupEventHandler(GamesService gamesService, UsersService userService) {
         this.gamesService = gamesService;
+        this.userService = userService;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -48,5 +52,8 @@ public class AppStartupEventHandler {
         for (var game : games) {
             this.gamesService.createGame(game);
         }
+
+        this.userService.createUser(new CreateUserDTO("mlandes", "1234"));
+        this.userService.createUser(new CreateUserDTO("rlandes", "1234"));
     }
 }

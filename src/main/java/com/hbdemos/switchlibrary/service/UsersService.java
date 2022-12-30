@@ -18,8 +18,12 @@ public class UsersService {
         this.repository = repository;
     }
 
-    public UserDTO createGame(CreateUserDTO spec) {
-        var entity = new UserEntity(null, spec.getName(), spec.getPassword());
+    public UserDTO createUser(CreateUserDTO spec) {
+        var entity = new UserEntity(
+                null,
+                spec.getName(),
+                spec.getPassword(),
+                List.of());
         var result = this.repository.saveAndFlush(entity);
         return result.asDto();
     }

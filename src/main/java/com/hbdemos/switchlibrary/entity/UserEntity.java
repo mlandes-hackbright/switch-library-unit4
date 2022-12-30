@@ -2,15 +2,16 @@ package com.hbdemos.switchlibrary.entity;
 
 import com.hbdemos.switchlibrary.dto.UserDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="Users")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,9 @@ public class UserEntity {
 
     @Column(name="password")
     private String password;
+
+    @OneToMany(mappedBy="user")
+    private List<CheckoutEntity> checkouts;
 
     public UserEntity(UserDTO dto) {
         this.id = dto.getId();
