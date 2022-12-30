@@ -8,22 +8,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/checkouts")
-public class CheckoutsController {
+public class CheckoutsRestController {
     CheckoutService service;
 
     @Autowired
-    public CheckoutsController(CheckoutService service) {
+    public CheckoutsRestController(CheckoutService service) {
         this.service = service;
     }
 
     @PostMapping()
-    public ResponseEntity<?> checkoutGame(@RequestBody CheckoutSpecDTO spec) {
+    public ResponseEntity<?> checkoutGame(@RequestBody CheckoutSpecDTO spec) throws ApiBadRequest {
         var result = this.service.checkoutGame(spec);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> returnGame(@PathVariable Long id) {
+    public ResponseEntity<?> returnGame(@PathVariable Long id) throws ApiBadRequest {
         this.service.returnGame(id);
         return ResponseEntity.noContent().build();
     }

@@ -55,15 +55,15 @@ public class GamesRestControllerTest {
         assertEquals(0L, (long) result.getBody().get(0).getId());
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void itThrowsOnBadId() {
+    @Test(expected = ApiNotFound.class)
+    public void itThrowsOnBadId() throws ApiBadRequest {
         given(service.getGame(any())).willThrow(new NoSuchElementException("message"));
 
         var result = controller.viewGame(5L);
     }
 
     @Test
-    public void itDeletesGame() {
+    public void itDeletesGame() throws ApiBadRequest {
 //        given(service.removeGame(any()))
 //        given(service.getGame(any())).willReturn(new SwitchGameDTO(5L, "A", "B", "C"));
 

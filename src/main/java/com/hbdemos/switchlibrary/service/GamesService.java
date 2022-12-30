@@ -1,5 +1,6 @@
 package com.hbdemos.switchlibrary.service;
 
+import com.hbdemos.switchlibrary.api.ApiNotFound;
 import com.hbdemos.switchlibrary.dto.CreateSwitchGameDTO;
 import com.hbdemos.switchlibrary.dto.SwitchGameDTO;
 import com.hbdemos.switchlibrary.entity.SwitchGameEntity;
@@ -34,12 +35,12 @@ public class GamesService {
         return games.stream().map(SwitchGameEntity::asDto).toList();
     }
 
-    public SwitchGameDTO getGame(Long id) {
+    public SwitchGameDTO getGame(Long id) throws ApiNotFound {
         var game = this.repository.findById(id);
-        return game.orElseThrow().asDto();
+        return game.orElseThrow(() -> new ApiNotFound(id)).asDto();
     }
 
-    public SwitchGameDTO updateGame(SwitchGameDTO game) {
+    public SwitchGameDTO updateGame(SwitchGameDTO game) throws ApiNotFound {
         var entityOpt = this.repository.findById(game.getId());
         entityOpt.ifPresent(entity -> {
             entity.setTitle(game.getTitle());
@@ -48,10 +49,11 @@ public class GamesService {
             this.repository.saveAndFlush(entity);
         });
 
-        return entityOpt.orElseThrow().asDto();
+        return entityOpt.orElseThrow(() -> new ApiNotFound(game.getId())).asDto();
     }
 
-    public void removeGame(Long id) {
+    public void removeGame(Long id) throws ApiNotFound {
+        this.repository.findById(id).orElseThrow(() -> new ApiNotFound(id));
         this.repository.deleteById(id);
     }
 }

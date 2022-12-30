@@ -26,7 +26,7 @@ public class GamesRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SwitchGameDTO> viewGame(@PathVariable Long id) {
+    public ResponseEntity<SwitchGameDTO> viewGame(@PathVariable Long id) throws ApiBadRequest {
         var result = this.service.getGame(id);
         return ResponseEntity.ok(result);
     }
@@ -38,13 +38,13 @@ public class GamesRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SwitchGameDTO> updateGame(@RequestBody SwitchGameDTO item) {
+    public ResponseEntity<SwitchGameDTO> updateGame(@RequestBody SwitchGameDTO item) throws ApiBadRequest {
         var result = this.service.updateGame(item);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeGame(@PathVariable Long id) {
+    public ResponseEntity<?> removeGame(@PathVariable Long id) throws ApiBadRequest {
         this.service.removeGame(id);
         return ResponseEntity.noContent().build();
     }

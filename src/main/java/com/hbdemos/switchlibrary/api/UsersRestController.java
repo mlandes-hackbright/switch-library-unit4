@@ -26,7 +26,7 @@ public class UsersRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> viewUser(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> viewUser(@PathVariable Long id) throws ApiBadRequest {
         var result = this.service.getUser(id);
         return ResponseEntity.ok(result);
     }
@@ -38,7 +38,7 @@ public class UsersRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeUser(@PathVariable Long id) {
+    public ResponseEntity<?> removeUser(@PathVariable Long id) throws ApiBadRequest {
         this.service.removeUser(id);
         return ResponseEntity.noContent().build();
     }
