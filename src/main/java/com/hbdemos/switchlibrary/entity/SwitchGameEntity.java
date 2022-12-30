@@ -26,8 +26,8 @@ public class SwitchGameEntity {
     @Column(name="publisher")
     private String publisher;
 
-    @OneToMany(mappedBy="game")
-    private List<CheckoutEntity> checkouts;
+    @OneToOne(mappedBy="game")
+    private CheckoutEntity checkout;
 
     public SwitchGameEntity(SwitchGameDTO dto) {
         this.id = dto.getId();

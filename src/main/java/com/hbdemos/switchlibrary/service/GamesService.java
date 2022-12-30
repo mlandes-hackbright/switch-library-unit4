@@ -25,7 +25,7 @@ public class GamesService {
                 spec.getTitle(),
                 spec.getRating(),
                 spec.getPublisher(),
-                List.of());
+                null);
         var result = this.repository.saveAndFlush(entity);
         return result.asDto();
     }

@@ -22,8 +22,8 @@ public class CheckoutEntity {
     @JoinColumn(name="user_id")
     private UserEntity user;
 
-    @ManyToOne
-    @JoinColumn(name="game_id")
+    @OneToOne(optional = false)
+    @JoinColumn(name="game_id", nullable = false)
     private SwitchGameEntity game;
 
     public CheckoutDTO asDto() {

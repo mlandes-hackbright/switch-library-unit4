@@ -11,6 +11,8 @@ import com.hbdemos.switchlibrary.repository.IUsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CheckoutService {
     private ICheckoutsRepository repository;
@@ -24,11 +26,21 @@ public class CheckoutService {
         this.gameRepository = gameRepository;
     }
 
+    public List<CheckoutDTO> listCurrentCheckouts() {
+        var result = this.repository.findAll();
+        return result.stream().map(CheckoutEntity::asDto).toList();
+    }
+
     public CheckoutDTO checkoutGame(CheckoutSpecDTO spec) throws ApiBadRequest {
         var user = this.userRepository.findById(spec.getUserId())
                 .orElseThrow(() -> new ApiBadRequest("user with id " + spec.getUserId() + " not found"));
         var game = this.gameRepository.findById(spec.getGameId())
                 .orElseThrow(() -> new ApiBadRequest("game with id " + spec.getGameId() + " not found"));
+
+        // prevents a game from being checked-out more than once at a time
+        if (game.getCheckout() != null) {
+            throw new ApiBadRequest("game with id " + spec.getGameId() + " is already checked-out");
+        }
 
         var entity = new CheckoutEntity(null, user, game);
         var result = this.repository.saveAndFlush(entity);
