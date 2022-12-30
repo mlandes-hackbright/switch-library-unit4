@@ -1,22 +1,3 @@
-Resources at URL
-GET: retrieve resource(s) at a specified location
-POST: add a new resource to a collection
-PUT: full update to a resource at a location
-DELETE: remove a resource from a location
-PATCH: partial update to a resource (more complex, not doing this here today)
-
-HTTP Responses
-1xx: informational
-2xx: 200 ok, 201 created, 202 accepted, 204 no content
-3xx: redirect to a different location
-4xx: the client of the application had an error
-400 bad request in general
-401 unauthorized (you will need to obtain an access token to be allowed)
-403 forbidden (even if you are authorized in general, you don't have access to this resource)
-404 not found (url is wrong)
-5xx: server had an error, try again later (500 generic server error, etc)
-
-REST
 **Users**
 GET /api/users          - list all the users of our app
 GET /api/users/{id}     - get the details for a specific app user
@@ -31,9 +12,6 @@ PUT /api/games/{id} - update a specific game in the library
 DELETE /api/games/{id} - remove a specific game from the library
 
 **Checkout**
-BAD:    POST /api/games/checkoutgame ... this is not resource management, we are incorrectly using verbs in the url
-        POST /api/games/return
-
 BETTER: POST /api/checkouts         - add a new checkout resource
         GET /api/checkouts/{id}     - view details for a checked-out game
         DELETE /api/checkouts/{id}  - undo a checkout / return the game, etc...
